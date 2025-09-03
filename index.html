@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Business Dashboard</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+        :root {
+            --primary-color: #4a90e2;
+            --secondary-color: #50e3c2;
+            --background-color: #f0f2f5;
+            --card-background: #ffffff;
+            --text-color: #333333;
+            --light-text-color: #777777;
+            --shadow-color: rgba(0, 0, 0, 0.1);
+            --border-radius: 8px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        body {
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar styles */
+        .sidebar {
+            width: 250px;
+            background-color: var(--card-background);
+            padding: 20px;
+            box-shadow: 2px 0 5px var(--shadow-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .sidebar h2 {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            color: var(--primary-color);
+            font-weight: 700;
+        }
+
+        .sidebar-menu {
+            list-style-type: none;
+            width: 100%;
+        }
+
+        .sidebar-menu li {
+            margin-bottom: 10px;
+        }
+
+        .sidebar-menu a {
+            display: block;
+            padding: 12px 20px;
+            text-decoration: none;
+            color: var(--light-text-color);
+            border-radius: var(--border-radius);
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .sidebar-menu a:hover,
+        .sidebar-menu a.active {
+            background-color: var(--primary-color);
+            color: var(--card-background);
+        }
+
+        /* Main content styles */
+        .main-content {
+            flex-grow: 1;
+            padding: 40px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-color);
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background-color: var(--card-background);
+            padding: 20px;
+            border-radius: var(--border-radius);
+            box-shadow: 0 4px 6px var(--shadow-color);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 10px var(--shadow-color);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .card-header h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-color);
+        }
+
+        .card-body p {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .card-body small {
+            color: var(--light-text-color);
+        }
+
+        .chart-container {
+            height: 250px;
+        }
+
+        /* Responsive styles */
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                height: auto;
+                flex-direction: row;
+                justify-content: space-around;
+                padding: 10px;
+            }
+            
+            .sidebar h2 {
+                display: none;
+            }
+            
+            .sidebar-menu {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .sidebar-menu li {
+                margin: 0 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="sidebar">
+            <h2>Dashboard</h2>
+            <ul class="sidebar-menu">
+                <li><a href="#" class="active">📊 Overview</a></li>
+                <li><a href="#">📈 Sales</a></li>
+                <li><a href="#">🛒 Products</a></li>
+                <li><a href="#">👥 Customers</a></li>
+                <li><a href="#">⚙️ Settings</a></li>
+            </ul>
+        </div>
+
+        <div class="main-content">
+            <div class="header">
+                <h1>Dashboard Overview</h1>
+                <p>Welcome, User!</p>
+            </div>
+
+            <div class="dashboard-grid">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Total Sales</h3>
+                    </div>
+                    <div class="card-body">
+                        <p id="totalSales">$<span id="salesValue">0</span></p>
+                        <small>+5.2% from last month</small>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3>New Customers</h3>
+                    </div>
+                    <div class="card-body">
+                        <p id="newCustomers"><span id="customersValue">0</span></p>
+                        <small>+12% from last quarter</small>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Total Revenue</h3>
+                    </div>
+                    <div class="card-body">
+                        <p id="totalRevenue">$<span id="revenueValue">0</span></p>
+                        <small>-2.5% from last week</small>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Total Orders</h3>
+                    </div>
+                    <div class="card-body">
+                        <p id="totalOrders"><span id="ordersValue">0</span></p>
+                        <small>+8% from last month</small>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Sales Trend</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="chart-container">
+                            <canvas id="salesChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Customer Acquisition</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="chart-container">
+                            <canvas id="customerChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Sample data for the dashboard
+            const data = {
+                sales: 52000,
+                customers: 1250,
+                revenue: 185000,
+                orders: 4500,
+                salesTrendData: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                    datasets: [{
+                        label: 'Monthly Sales',
+                        data: [12000, 19000, 15000, 25000, 22000, 30000],
+                        borderColor: '#4a90e2',
+                        backgroundColor: 'rgba(74, 144, 226, 0.2)',
+                        tension: 0.4,
+                        fill: true,
+                    }]
+                },
+                customerAcquisitionData: {
+                    labels: ['Q1', 'Q2', 'Q3', 'Q4'],
+                    datasets: [{
+                        label: 'New Customers',
+                        data: [250, 400, 350, 600],
+                        backgroundColor: ['#4a90e2', '#50e3c2', '#f5a623', '#bd10e0'],
+                    }]
+                }
+            };
+
+            // Update the dashboard cards with data
+            document.getElementById('salesValue').textContent = data.sales.toLocaleString();
+            document.getElementById('customersValue').textContent = data.customers.toLocaleString();
+            document.getElementById('revenueValue').textContent = data.revenue.toLocaleString();
+            document.getElementById('ordersValue').textContent = data.orders.toLocaleString();
+
+            // Render the Sales Trend chart using Chart.js
+            const salesCtx = document.getElementById('salesChart').getContext('2d');
+            new Chart(salesCtx, {
+                type: 'line',
+                data: data.salesTrendData,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    }
+                }
+            });
+
+            // Render the Customer Acquisition chart using Chart.js
+            const customerCtx = document.getElementById('customerChart').getContext('2d');
+            new Chart(customerCtx, {
+                type: 'bar',
+                data: data.customerAcquisitionData,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
